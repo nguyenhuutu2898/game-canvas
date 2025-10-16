@@ -6,10 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     html, body { margin:0; height:100%; overflow:hidden; background:#0b0b0f; color:#eee; font-family:ui-sans-serif,system-ui; }
-    #hud {
-      position: fixed; top: 12px; left: 12px; right:12px; display:flex; justify-content:space-between; pointer-events:none;
-      font-weight:600; letter-spacing:.3px;
-    }
+    #hud { position: fixed; top:12px; left:12px; right:12px; display:flex; justify-content:space-between; pointer-events:none; font-weight:600; letter-spacing:.3px; }
     #hint { position:fixed; bottom:16px; left:50%; transform:translateX(-50%); opacity:.8; }
     .btn { pointer-events:auto; background:#1f2937; border:1px solid #374151; padding:6px 10px; border-radius:10px; cursor:pointer; }
   </style>
@@ -21,8 +18,7 @@
   </div>
   <div id="hint">← / → hoặc A / D để né chướng ngại vật</div>
 
-  <!-- Three.js CDN (non-module) -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.min.js"></script>
-  <script src="script.js"></script>
+  <!-- LƯU Ý: type="module" -->
+  <script type="module" src="script.js"></script>
 </body>
 </html>

@@ -1,9 +1,15 @@
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js";
+
 // ====== Scene / Camera / Renderer ======
+
 const scene = new THREE.Scene();
 scene.fog = new THREE.Fog(0x0b0b0f, 10, 60);
 
 const camera = new THREE.PerspectiveCamera(
-  70, window.innerWidth / window.innerHeight, 0.1, 1000
+  70,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000
 );
 camera.position.set(0, 3, 8);
 camera.lookAt(0, 1, 0);
@@ -23,9 +29,13 @@ scene.add(dir);
 
 // ====== Ground (đường chạy) ======
 const groundGeo = new THREE.PlaneGeometry(20, 200, 1, 1);
-const groundMat = new THREE.MeshStandardMaterial({ color: 0x111827, metalness: 0, roughness: 1 });
+const groundMat = new THREE.MeshStandardMaterial({
+  color: 0x111827,
+  metalness: 0,
+  roughness: 1,
+});
 const ground = new THREE.Mesh(groundGeo, groundMat);
-ground.rotation.x = -Math.PI/2;
+ground.rotation.x = -Math.PI / 2;
 ground.position.z = -80; // cho dài ra phía trước
 scene.add(ground);
 
@@ -51,7 +61,9 @@ const obsGeo = new THREE.BoxGeometry(1.2, 1.2, 1.2);
 
 // Tạo chất liệu ngẫu nhiên nhẹ
 function randomMat() {
-  return new THREE.MeshStandardMaterial({ color: new THREE.Color().setHSL(Math.random(), 0.6, 0.5) });
+  return new THREE.MeshStandardMaterial({
+    color: new THREE.Color().setHSL(Math.random(), 0.6, 0.5),
+  });
 }
 
 function spawnObstacle(zPos) {
@@ -65,39 +77,39 @@ function spawnObstacle(zPos) {
 }
 
 // Spawn batch ban đầu
-let baseSpeed = 0.24;        // tốc độ “đường + vật cản” tiến về player
-let spawnInterval = 26;      // khoảng cách giữa các chướng ngại vật
+let baseSpeed = 0.24; // tốc độ “đường + vật cản” tiến về player
+let spawnInterval = 26; // khoảng cách giữa các chướng ngại vật
 for (let i = 20; i <= 200; i += spawnInterval) spawnObstacle(-i);
 
 // ====== Input ======
 const keys = {};
-window.addEventListener('keydown', (e) => {
+window.addEventListener("keydown", (e) => {
   keys[e.key.toLowerCase()] = true;
-  if (e.key === 'ArrowLeft' || e.key.toLowerCase() === 'a') {
+  if (e.key === "ArrowLeft" || e.key.toLowerCase() === "a") {
     targetLaneIndex = Math.max(0, targetLaneIndex - 1);
   }
-  if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'd') {
+  if (e.key === "ArrowRight" || e.key.toLowerCase() === "d") {
     targetLaneIndex = Math.min(lanes.length - 1, targetLaneIndex + 1);
   }
 });
-window.addEventListener('keyup', (e) => (keys[e.key.toLowerCase()] = false));
+window.addEventListener("keyup", (e) => (keys[e.key.toLowerCase()] = false));
 
 // ====== Game State ======
 let running = true;
 let score = 0;
-const scoreEl = document.getElementById('score');
-const restartBtn = document.getElementById('restart');
-const hintEl = document.getElementById('hint');
+const scoreEl = document.getElementById("score");
+const restartBtn = document.getElementById("restart");
+const hintEl = document.getElementById("hint");
 
 function gameOver() {
   running = false;
-  hintEl.textContent = 'Game Over!';
-  restartBtn.style.display = 'inline-block';
+  hintEl.textContent = "Game Over!";
+  restartBtn.style.display = "inline-block";
 }
 
-restartBtn.addEventListener('click', () => {
+restartBtn.addEventListener("click", () => {
   // Reset state
-  obstacles.forEach(o => scene.remove(o));
+  obstacles.forEach((o) => scene.remove(o));
   obstacles.length = 0;
   for (let i = 20; i <= 200; i += spawnInterval) spawnObstacle(-i);
   baseSpeed = 0.24;
@@ -107,8 +119,8 @@ restartBtn.addEventListener('click', () => {
   player.position.x = lanes[targetLaneIndex];
   player.position.y = 0.5;
   running = true;
-  restartBtn.style.display = 'none';
-  hintEl.textContent = '← / → hoặc A / D để né chướng ngại vật';
+  restartBtn.style.display = "none";
+  hintEl.textContent = "← / → hoặc A / D để né chướng ngại vật";
 });
 
 // ====== Camera subtle follow & world scroll ======
@@ -126,7 +138,7 @@ function animate(now) {
     // Di chuyển player sang lane mục tiêu (lerp)
     laneX = lanes[targetLaneIndex];
     const dx = laneX - player.position.x;
-    playerSpeedX = dx * 0.2 * dt;        // easing
+    playerSpeedX = dx * 0.2 * dt; // easing
     player.position.x += playerSpeedX;
 
     // Nhấc người chơi "nhún" nhẹ theo thời gian
@@ -173,7 +185,7 @@ function animate(now) {
 requestAnimationFrame(animate);
 
 // ====== Resize ======
-window.addEventListener('resize', () => {
+window.addEventListener("resize", () => {
   camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(innerWidth, innerHeight);
