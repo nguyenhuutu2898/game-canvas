@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Wheel Game</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #game-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #ui-panel {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        #spin-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+            border: none;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 200;
+        }
+
+        #spin-button:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        #spin-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: translate(-50%, -50%) scale(0.9);
+        }
+
+        #result-modal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            display: none;
+            z-index: 300;
+            max-width: 400px;
+        }
+
+        .prize-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #007bff;
+        }
+
+        .coins {
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        h1 {
+            color: #333;
+            margin: 0 0 20px 0;
+        }
+
+        h2 {
+            color: #ff6b6b;
+            margin: 0 0 15px 0;
+        }
+
+        p {
+            margin: 10px 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="ui-panel">
+            <h2>🎰 Lucky Wheel</h2>
+            <p><strong>Coins:</strong> <span id="coins">100</span></p>
+            <p><strong>Spins:</strong> <span id="spins">0</span></p>
+            <p><strong>Cost:</strong> <span class="coins">10</span> coins per spin</p>
+        </div>
+
+        <button id="spin-button">SPIN!</button>
+
+        <div id="result-modal">
+            <h2 id="result-title">🎉 Congratulations!</h2>
+            <div id="result-content"></div>
+            <button onclick="closeResult()" style="
+                background: #007bff;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                margin-top: 15px;
+            ">Continue</button>
+        </div>
+    </div>
+
+    <script type="module" src="lucky-wheel.js"></script>
+</body>
+</html>
